@@ -15,7 +15,7 @@
     "test": "jest"
   },
   "lint-staged": {
-    "__test__": [
+    "__test__/**": [
       "eslint",
       "prettier --write"
     ],
