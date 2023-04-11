@@ -1,4 +1,4 @@
-export function testFunc(a: number){
+export function testFunc(a: number) {
   return a + 1;
 }
 
