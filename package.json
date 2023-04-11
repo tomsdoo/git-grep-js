@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/tomsdoo/git-grep-js/issues"
   },
-  "homepage": "https://github.com/tomsdoo/git-grep-js#readme"
+  "homepage": "https://github.com/tomsdoo/git-grep-js#readme",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
 }
