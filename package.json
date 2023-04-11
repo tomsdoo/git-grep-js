@@ -19,7 +19,7 @@
       "eslint",
       "prettier --write"
     ],
-    "src/": [
+    "src/**": [
       "eslint",
       "prettier --write"
     ]
