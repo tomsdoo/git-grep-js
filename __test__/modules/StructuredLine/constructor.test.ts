@@ -87,4 +87,18 @@ describe("StructuredLine", () => {
       expect(new StructuredLine(rawLine)).toHaveProperty("matched", true);
     });
   });
+
+  describe("has _lineNumber", () => {
+    it("ok if line number is between 2 hyphens", () => {
+      rawLine = "src/sub/dir/file.ext-123-  const a = 1;";
+
+      expect(new StructuredLine(rawLine)).toHaveProperty("_lineNumber", 123);
+    });
+
+    it("ok if line number is between 2 colons", () => {
+      rawLine = "src/sub/dir/file.ext:123:  const a = 1;";
+
+      expect(new StructuredLine(rawLine)).toHaveProperty("_lineNumber", 123);
+    });
+  });
 });
