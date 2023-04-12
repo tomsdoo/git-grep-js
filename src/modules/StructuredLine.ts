@@ -13,6 +13,10 @@ export class StructuredLine {
     return this._fileName;
   }
 
+  public get matched(): boolean {
+    return this._matched;
+  }
+
   public get rawLine(): string {
     return this._rawLine;
   }
