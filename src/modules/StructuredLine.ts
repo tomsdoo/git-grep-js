@@ -6,6 +6,10 @@ export class StructuredLine {
     this._fileName = rawLine.split("-")[0].split(":")[0];
   }
 
+  public get fileName(): string {
+    return this._fileName;
+  }
+
   public get rawLine(): string {
     return this._rawLine;
   }
