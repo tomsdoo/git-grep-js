@@ -20,6 +20,10 @@ export class StructuredLine {
     return this._fileName;
   }
 
+  public get lineNumber(): number {
+    return this._lineNumber;
+  }
+
   public get matched(): boolean {
     return this._matched;
   }
