@@ -1,4 +1,5 @@
 export class StructuredLine {
+  protected _codeLine: string;
   protected _fileName: string;
   protected _lineNumber: number;
   protected _matched: boolean;
@@ -14,6 +15,9 @@ export class StructuredLine {
     );
     const sLineNumber = lineNumberAndCode.split("-")[0].split(":")[0];
     this._lineNumber = Number(sLineNumber);
+    this._codeLine = lineNumberAndCode.slice(
+      sLineNumber.length + HYPHEN_CHARACTER_LENGTH
+    );
   }
 
   public get fileName(): string {
