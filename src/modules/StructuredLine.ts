@@ -20,6 +20,10 @@ export class StructuredLine {
     );
   }
 
+  public get codeLine(): string {
+    return this._codeLine;
+  }
+
   public get fileName(): string {
     return this._fileName;
   }
