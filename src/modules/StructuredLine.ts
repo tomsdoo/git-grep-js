@@ -1,5 +1,6 @@
 export class StructuredLine {
   protected _fileName: string;
+  protected _lineNumber: number;
   protected _matched: boolean;
   protected _rawLine: string;
   constructor(rawLine: string) {
@@ -7,6 +8,12 @@ export class StructuredLine {
     this._fileName = rawLine.split("-")[0].split(":")[0];
     const colonDividedFileName = rawLine.split(":")[0];
     this._matched = colonDividedFileName === this._fileName;
+    const HYPHEN_CHARACTER_LENGTH = 1;
+    const lineNumberAndCode = rawLine.slice(
+      this._fileName.length + HYPHEN_CHARACTER_LENGTH
+    );
+    const sLineNumber = lineNumberAndCode.split("-")[0].split(":")[0];
+    this._lineNumber = Number(sLineNumber);
   }
 
   public get fileName(): string {
