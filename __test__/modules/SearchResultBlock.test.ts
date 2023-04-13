@@ -7,6 +7,11 @@ import {
   jest,
 } from "@jest/globals";
 import { SearchResultBlock } from "@/modules/SearchResultBlock";
+import { StructuredLine } from "@/modules/StructuredLine";
+
+jest.mock("@/modules/StructuredLine", () => ({
+  StructuredLine: jest.fn().mockImplementation(() => ({})),
+}));
 
 describe("SearchResultBlock", () => {
   let rawLines: string[];
@@ -34,5 +39,16 @@ describe("SearchResultBlock", () => {
   it("has rawLines", () => {
     const block = new SearchResultBlock(blockedLinesStr);
     expect(block).toHaveProperty("rawLines", rawLines);
+  });
+
+  it("has _structuredLines", () => {
+    const block = new SearchResultBlock(blockedLinesStr);
+    expect(block).toHaveProperty("_structuredLines");
+    expect(StructuredLine).toHaveBeenCalledTimes(5);
+    expect(StructuredLine).toHaveBeenNthCalledWith(1, rawLines[0]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(2, rawLines[1]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(3, rawLines[2]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(4, rawLines[3]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(5, rawLines[4]);
   });
 });
