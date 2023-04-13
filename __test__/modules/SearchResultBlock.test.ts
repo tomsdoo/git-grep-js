@@ -51,4 +51,15 @@ describe("SearchResultBlock", () => {
     expect(StructuredLine).toHaveBeenNthCalledWith(4, rawLines[3]);
     expect(StructuredLine).toHaveBeenNthCalledWith(5, rawLines[4]);
   });
+
+  it("has structuredLines", () => {
+    const block = new SearchResultBlock(blockedLinesStr);
+    expect(block).toHaveProperty("structuredLines");
+    expect(StructuredLine).toHaveBeenCalledTimes(5);
+    expect(StructuredLine).toHaveBeenNthCalledWith(1, rawLines[0]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(2, rawLines[1]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(3, rawLines[2]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(4, rawLines[3]);
+    expect(StructuredLine).toHaveBeenNthCalledWith(5, rawLines[4]);
+  });
 });

@@ -13,4 +13,8 @@ export class SearchResultBlock {
   public get rawLines(): string[] {
     return this._rawLines.slice();
   }
+
+  public get structuredLines(): StructuredLine[] {
+    return this._structuredLines;
+  }
 }
