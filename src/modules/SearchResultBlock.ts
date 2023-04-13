@@ -3,4 +3,8 @@ export class SearchResultBlock {
   constructor(block: string) {
     this._rawLines = block.split("\n");
   }
+
+  public get rawLines(): string[] {
+    return this._rawLines.slice();
+  }
 }
