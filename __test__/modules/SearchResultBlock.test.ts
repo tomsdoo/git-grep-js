@@ -30,4 +30,9 @@ describe("SearchResultBlock", () => {
     const block = new SearchResultBlock(blockedLinesStr);
     expect(block).toHaveProperty("_rawLines", rawLines);
   });
+
+  it("has rawLines", () => {
+    const block = new SearchResultBlock(blockedLinesStr);
+    expect(block).toHaveProperty("rawLines", rawLines);
+  });
 });
