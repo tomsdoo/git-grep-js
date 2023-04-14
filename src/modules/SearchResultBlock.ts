@@ -10,6 +10,10 @@ export class SearchResultBlock {
     );
   }
 
+  public get codeLines(): string[] {
+    return this._structuredLines.map(({ codeLine }) => codeLine);
+  }
+
   public get matchedStructuredLines(): StructuredLine[] {
     return this._structuredLines.filter(({ matched }) => matched);
   }
