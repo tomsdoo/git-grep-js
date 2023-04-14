@@ -29,24 +29,24 @@ describe("SearchResultBlock", () => {
   describe("has matchedStructuredLines", () => {
     it("has length 1", () => {
       const block = new SearchResultBlock(blockedLinesStr);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[0], "matched", "get")
         .mockReturnValue(false);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[1], "matched", "get")
         .mockReturnValue(false);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[2], "matched", "get")
         .mockReturnValue(false);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[3], "matched", "get")
         .mockReturnValue(true);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[4], "matched", "get")
         .mockReturnValue(false);
 
@@ -55,24 +55,24 @@ describe("SearchResultBlock", () => {
 
     it("has length 2", () => {
       const block = new SearchResultBlock(blockedLinesStr);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[0], "matched", "get")
         .mockReturnValue(false);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[1], "matched", "get")
         .mockReturnValue(true);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[2], "matched", "get")
         .mockReturnValue(false);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[3], "matched", "get")
         .mockReturnValue(true);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[4], "matched", "get")
         .mockReturnValue(false);
 
@@ -81,24 +81,24 @@ describe("SearchResultBlock", () => {
 
     it("has length 5", () => {
       const block = new SearchResultBlock(blockedLinesStr);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[0], "matched", "get")
         .mockReturnValue(true);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[1], "matched", "get")
         .mockReturnValue(true);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[2], "matched", "get")
         .mockReturnValue(true);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[3], "matched", "get")
         .mockReturnValue(true);
-      // @ts-expect-error ignore accessibility: protected
       jest
+        // @ts-expect-error ignore accessibility: protected
         .spyOn(block._structuredLines[4], "matched", "get")
         .mockReturnValue(true);
 
