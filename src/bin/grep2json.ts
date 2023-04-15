@@ -26,6 +26,7 @@ async function getInputData(): Promise<string> {
 
   const stdinData = await getInputData();
   const blocks = stdinData
+    .replace(/\n\n/g, "\n--\n")
     .split("\n--\n")
     .map((resultBlock) => new SearchResultBlock(resultBlock));
   console.log(`[`);
