@@ -4,7 +4,7 @@ export class SearchResultBlock {
   protected _rawLines: string[];
   protected _structuredLines: StructuredLine[];
   constructor(block: string) {
-    this._rawLines = block.split("\n");
+    this._rawLines = block.split("\n").filter(Boolean);
     this._structuredLines = this._rawLines.map(
       (line) => new StructuredLine(line)
     );
