@@ -1,8 +1,11 @@
 {
-  "name": "git-grep",
+  "name": "git-grep-json",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "grep2json": "dist/cjs/bin/grep2json.js"
+  },
   "scripts": {
     "build": "tsc --project tsconfig.cjs.json && tsc --project tsconfig.esm.json",
     "format": "npm run format:src && npm run format:test",
