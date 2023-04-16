@@ -2,7 +2,15 @@
   "name": "git-grep-json",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/esm/index.d.ts",
+      "default": "./dist/cjs/index.js"
+    }
+  },
+  "types": "dist/esm/index.d.ts",
   "bin": {
     "grep2json": "dist/cjs/bin/grep2json.js"
   },
