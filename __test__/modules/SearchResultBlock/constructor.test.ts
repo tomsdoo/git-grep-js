@@ -31,9 +31,20 @@ describe("SearchResultBlock", () => {
     jest.clearAllMocks();
   });
 
-  it("has _rawLines", () => {
-    const block = new SearchResultBlock(blockedLinesStr);
-    expect(block).toHaveProperty("_rawLines", rawLines);
+  describe("has _rawLines", () => {
+    it("no blank lines", () => {
+      const block = new SearchResultBlock(blockedLinesStr);
+      expect(block).toHaveProperty("_rawLines", rawLines);
+    });
+
+    it("with some blank lines", () => {
+      const blockedLinesStrWithSomeBlankLines = rawLines
+        .map((rawLine) => [rawLine, ""])
+        .flat()
+        .join("\n");
+      const block = new SearchResultBlock(blockedLinesStrWithSomeBlankLines);
+      expect(block).toHaveProperty("_rawLines", rawLines);
+    });
   });
 
   it("has rawLines", () => {
