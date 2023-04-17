@@ -23,7 +23,7 @@ async function getInputData(): Promise<string> {
   });
 }
 
-async function defaultMakeObject(
+async function defaultSetupResult(
   block: SearchResultBlock,
   structuredLine: StructuredLine
 ): Promise<any> {
@@ -58,7 +58,7 @@ async function defaultMakeObject(
     ) {
       const structuredLine = matchedStructuredLines[structuredLineIndex];
 
-      const obj = await (config?.makeObject ?? defaultMakeObject)(
+      const obj = await (config?.setupResult ?? defaultSetupResult)(
         block,
         structuredLine
       );
