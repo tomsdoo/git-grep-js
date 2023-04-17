@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import { SearchResultBlock } from "../modules/SearchResultBlock";
+import type { StructuredLine } from "../modules/StructuredLine";
+import { getConfig } from "../util/getConfig";
 
 async function getInputData(): Promise<string> {
   return await new Promise((resolve) => {
@@ -21,8 +23,24 @@ async function getInputData(): Promise<string> {
   });
 }
 
+async function defaultMakeObject(
+  block: SearchResultBlock,
+  structuredLine: StructuredLine
+): Promise<any> {
+  return await Promise.resolve({
+    fileName: structuredLine.fileName,
+    matchedLineNumber: structuredLine.lineNumber,
+    codeLines: block.codeLines,
+    lineRange: {
+      start: block.structuredLines[0].lineNumber,
+      end: block.structuredLines.slice(-1)[0].lineNumber,
+    },
+  });
+}
+
 (async () => {
   ///
+  const config = await getConfig();
 
   const stdinData = await getInputData();
   const blocks = stdinData
@@ -30,18 +48,21 @@ async function getInputData(): Promise<string> {
     .split("\n--\n")
     .map((resultBlock) => new SearchResultBlock(resultBlock));
   console.log(`[`);
-  blocks.forEach((block, blockIndex) => {
+  for (let blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
+    const block = blocks[blockIndex];
     const matchedStructuredLines = block.matchedStructuredLines;
-    matchedStructuredLines.forEach((structuredLine, structuredLineIndex) => {
-      const obj = {
-        fileName: block.structuredLines[0].fileName,
-        matchedLineNumber: structuredLine.lineNumber,
-        codeLines: block.codeLines,
-        lineRange: {
-          start: block.structuredLines[0].lineNumber,
-          end: block.structuredLines.slice(-1)[0].lineNumber,
-        },
-      };
+    for (
+      let structuredLineIndex = 0;
+      structuredLineIndex < matchedStructuredLines.length;
+      structuredLineIndex++
+    ) {
+      const structuredLine = matchedStructuredLines[structuredLineIndex];
+
+      const obj = await (config?.makeObject ?? defaultMakeObject)(
+        block,
+        structuredLine
+      );
+
       const sObj = JSON.stringify(obj, null, 2);
       const isLastItem =
         blockIndex === blocks.length - 1 &&
@@ -51,8 +72,8 @@ async function getInputData(): Promise<string> {
       sObjNComma.split("\n").forEach((outLine) => {
         console.log(`  ${outLine}`);
       });
-    });
-  });
+    }
+  }
   console.log(`]`);
 
   ///
