@@ -67,7 +67,7 @@ npm install git-grep-json
 `grep2json.config.js` in process currend directory can change the outout.
 ``` shell
 module.exports = {
-  makeObject: async (block, structuredLine) => {
+  setupResult: async (block, structuredLine) => {
     return await Promise.resolve({
       fileName: structuredLine.fileName,
       matchedLineNumber: structuredLine.lineNumber,
