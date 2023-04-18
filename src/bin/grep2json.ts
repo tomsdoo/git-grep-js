@@ -1,12 +1,40 @@
 #!/usr/bin/env node
+import { Command } from "commander";
 import { SearchResultBlock } from "../modules/SearchResultBlock";
 import type { StructuredLine } from "../modules/StructuredLine";
 import { getConfig } from "../util/getConfig";
+import { cwd } from "process";
+import { writeFile } from "fs/promises";
+import { join } from "path";
 
-async function getInputData(): Promise<string> {
+const program = new Command();
+const commandName = "grep2json";
+
+program.option("--init-config", "initialize configuration");
+
+program.on("--help", () => {
+  console.log("");
+  console.log("Example call:");
+  console.log(`  ${commandName} --help`);
+  console.log(`  git grep -n -C 1 -e "some" | npx ${commandName}`);
+  console.log(`  ${commandName} --init-config`);
+});
+
+async function getInputData(): Promise<{
+  isTTY: boolean;
+  stdin: string;
+  opts: any;
+}> {
   return await new Promise((resolve) => {
     if (process.stdin.isTTY) {
-      resolve(process.argv[2]);
+      program.parse(process.argv);
+
+      const opts = program.opts();
+      resolve({
+        isTTY: true,
+        opts,
+        stdin: "",
+      });
     } else {
       let stdin = "";
       process.stdin.on("readable", () => {
@@ -17,7 +45,11 @@ async function getInputData(): Promise<string> {
       });
 
       process.stdin.on("end", () => {
-        resolve(stdin);
+        resolve({
+          isTTY: false,
+          opts: {},
+          stdin,
+        });
       });
     }
   });
@@ -38,11 +70,35 @@ async function defaultSetupResult(
   });
 }
 
+const defaultConfigFileCode = `
+module.exports = {
+  setupResult: async (block, structuredLine) => {
+    return await Promise.resolve({
+      fileName: structuredLine.fileName,
+      matchedLineNumber: structuredLine.lineNumber,
+      line: structuredLine.codeLine
+    });
+  }
+};
+`;
+async function initializeConfigurationFile(): Promise<void> {
+  const fileName = join(cwd(), "./grep2json.config.js");
+  await writeFile(fileName, defaultConfigFileCode);
+}
+
 (async () => {
   ///
   const config = await getConfig();
 
-  const stdinData = await getInputData();
+  const { isTTY, opts, stdin: stdinData } = await getInputData();
+  if (isTTY) {
+    if (opts.initConfig as boolean) {
+      await initializeConfigurationFile();
+      return;
+    }
+    program.help();
+    return;
+  }
   const blocks = stdinData
     .replace(/\n\n/g, "\n--\n")
     .split("\n--\n")
