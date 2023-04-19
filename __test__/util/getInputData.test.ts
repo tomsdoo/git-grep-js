@@ -19,16 +19,26 @@ jest.mock("commander", () => ({
 }));
 
 describe("getInputData()", () => {
+  let isTTYExists: boolean;
+  beforeEach(() => {
+    isTTYExists = "isTTY" in process.stdin;
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   describe("isTTY == true", () => {
     beforeEach(() => {
-      jest.replaceProperty(process.stdin, "isTTY", true);
+      if (isTTYExists) {
+        jest.replaceProperty(process.stdin, "isTTY", true);
+      }
     });
 
     it("argv will be parsed", async () => {
+      if (!isTTYExists) {
+        return;
+      }
       jest.replaceProperty(process, "argv", [
         `node`,
         `dummy.js`,
@@ -46,10 +56,15 @@ describe("getInputData()", () => {
 
   describe("isTTY == false", () => {
     beforeEach(() => {
-      jest.replaceProperty(process.stdin, "isTTY", false);
+      if (isTTYExists) {
+        jest.replaceProperty(process.stdin, "isTTY", false);
+      }
     });
 
     it("stdin will be passed", async () => {
+      if (!isTTYExists) {
+        return;
+      }
       process.stdin.push("testData");
       process.stdin.push("testData2");
       process.stdin.emit("end");
