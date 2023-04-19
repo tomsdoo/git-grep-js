@@ -65,6 +65,13 @@ npm install git-grep-json
 ## configurations
 
 `grep2json.config.js` in process currend directory can change the outout.
+
+You can get `grep2json.config.js` with the below line
+``` shell
+npx gren2json --init-config
+```
+
+configuration example
 ``` javascript
 module.exports = {
   setupResult: async (block, structuredLine) => {
