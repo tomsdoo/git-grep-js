@@ -6,6 +6,7 @@ import { getConfig } from "../util/getConfig";
 import { cwd } from "process";
 import { writeFile } from "fs/promises";
 import { join } from "path";
+import { getInputData } from "../util/getInputData";
 
 const program = new Command();
 const commandName = "grep2json";
@@ -19,41 +20,6 @@ program.on("--help", () => {
   console.log(`  git grep -n -C 1 -e "some" | npx ${commandName}`);
   console.log(`  ${commandName} --init-config`);
 });
-
-async function getInputData(): Promise<{
-  isTTY: boolean;
-  stdin: string;
-  opts: any;
-}> {
-  return await new Promise((resolve) => {
-    if (process.stdin.isTTY) {
-      program.parse(process.argv);
-
-      const opts = program.opts();
-      resolve({
-        isTTY: true,
-        opts,
-        stdin: "",
-      });
-    } else {
-      let stdin = "";
-      process.stdin.on("readable", () => {
-        const chunk = process.stdin.read();
-        if (chunk != null) {
-          stdin += chunk as string;
-        }
-      });
-
-      process.stdin.on("end", () => {
-        resolve({
-          isTTY: false,
-          opts: {},
-          stdin,
-        });
-      });
-    }
-  });
-}
 
 async function defaultSetupResult(
   block: SearchResultBlock,
@@ -90,7 +56,7 @@ async function initializeConfigurationFile(): Promise<void> {
   ///
   const config = await getConfig();
 
-  const { isTTY, opts, stdin: stdinData } = await getInputData();
+  const { isTTY, opts, stdin: stdinData } = await getInputData(program);
   if (isTTY) {
     if (opts.initConfig as boolean) {
       await initializeConfigurationFile();
