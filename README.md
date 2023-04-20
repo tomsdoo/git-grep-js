@@ -74,7 +74,8 @@ npx gren2json --init-config
 configuration example
 ``` javascript
 module.exports = {
-  setupResult: async (block, structuredLine) => {
+  prepareStore: async () => await Promise.resolve({}),
+  setupResult: async (block, structuredLine, store) => {
     return await Promise.resolve({
       fileName: structuredLine.fileName,
       matchedLineNumber: structuredLine.lineNumber,
@@ -83,3 +84,18 @@ module.exports = {
   }
 };
 ```
+
+### prepareStore()
+
+`prepareStore()` in `grep2json.config.js` will be executed once before `setupResult()`.
+
+`prepareStore()` should return a Promise that resolves as any object.
+
+### setupResult()
+
+`setupResult()` in `grep2json.config.js` will be executed with each matched line.
+
+`setupResult()` should return a Promise that resolves as any object.
+
+`setupResult()` receives block, line, and store as the parameters.
+
