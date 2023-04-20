@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/@tomsd/md-book/public/js/index.js"></script>
+    <script>
+      MdBook.start({
+        mdFiles: {
+          indexedPaths: [
+            "/md/about.md",
+            "/md/getting_started.md",
+            "/md/configurations.md",
+            "/md/classes.md"
+          ],
+          hiddenPaths: [
+            "/md/SearchResultBlock.md",
+            "/md/StructuredLine.md"
+          ]
+        },
+        header: { title: "git-grep-json" },
+        footer: {
+          text: "powered by ",
+          link: {
+            href: "https://www.npmjs.com/package/@tomsd/md-book",
+            text: "md-book"
+          }
+        },
+        mermaid: {
+          theme: "dark"
+        }
+      });
+    </script>
+    <meta name="description" content="git-grep-json provides some utility for the result of git-grep." />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tomsd/md-book/public/css/dark.css" />
+  </head>
+  <body></body>
+</html>
