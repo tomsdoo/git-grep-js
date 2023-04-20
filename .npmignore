@@ -1,6 +1,7 @@
 __test__/
 .github/
 .husky/
+docs/
 node_modules/
 src/
 .eslintrc.js
