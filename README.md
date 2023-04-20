@@ -1,6 +1,7 @@
 # git-grep-json
 
 It's a tool for git-grep.
+See https://git-grep-json.netlify.app/ also.
 
 ![npm](https://img.shields.io/npm/v/git-grep-json)
 ![NPM](https://img.shields.io/npm/l/git-grep-json)
