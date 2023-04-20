@@ -21,6 +21,10 @@ program.on("--help", () => {
   console.log(`  ${commandName} --init-config`);
 });
 
+async function defaultPrepareStore(): Promise<any> {
+  return await Promise.resolve({});
+}
+
 async function defaultSetupResult(
   block: SearchResultBlock,
   structuredLine: StructuredLine
@@ -38,7 +42,8 @@ async function defaultSetupResult(
 
 const defaultConfigFileCode = `
 module.exports = {
-  setupResult: async (block, structuredLine) => {
+  prepareStore: async () => await Promise.resolve({}),
+  setupResult: async (block, structuredLine, store) => {
     return await Promise.resolve({
       fileName: structuredLine.fileName,
       matchedLineNumber: structuredLine.lineNumber,
@@ -65,6 +70,7 @@ async function initializeConfigurationFile(): Promise<void> {
     program.help();
     return;
   }
+  const store = await (config?.prepareStore ?? defaultPrepareStore)();
   const blocks = stdinData
     .replace(/\n\n/g, "\n--\n")
     .split("\n--\n")
@@ -82,7 +88,8 @@ async function initializeConfigurationFile(): Promise<void> {
 
       const obj = await (config?.setupResult ?? defaultSetupResult)(
         block,
-        structuredLine
+        structuredLine,
+        store
       );
 
       const sObj = JSON.stringify(obj, null, 2);
