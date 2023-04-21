@@ -10,7 +10,7 @@ npx grep2json --init-config
 configuration example
 ``` javascript
 module.exports = {
-  prepareStore: async () => await Promise.resolve({}),
+  prepareStore: async (util) => await Promise.resolve({}),
   setupResult: async (block, structuredLine, store) => {
     return await Promise.resolve({
       fileName: structuredLine.fileName,
@@ -26,6 +26,8 @@ module.exports = {
 `prepareStore()` in `grep2json.config.js` will be executed once before `setupResult()`.
 
 `prepareStore()` should return a Promise that resolves as any object.
+
+[Utility instance](./Utility.md) will be passed as the parameter, so you can use it or expose it from store.
 
 ### setupResult()
 

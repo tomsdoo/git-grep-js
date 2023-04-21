@@ -2,6 +2,7 @@
 
 - [SearchResultBlock](./SearchResultBlock.md)
 - [StructuredLine](./StructuredLine.md)
+- [Utility](./Utility.md)
 
 ``` mermaid
 classDiagram
