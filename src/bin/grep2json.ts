@@ -7,6 +7,7 @@ import { cwd } from "process";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 import { getInputData } from "../util/getInputData";
+import { Utility } from "../modules/Utility";
 
 const program = new Command();
 const commandName = "grep2json";
@@ -21,7 +22,7 @@ program.on("--help", () => {
   console.log(`  ${commandName} --init-config`);
 });
 
-async function defaultPrepareStore(): Promise<any> {
+async function defaultPrepareStore(util: Utility): Promise<any> {
   return await Promise.resolve({});
 }
 
@@ -42,7 +43,7 @@ async function defaultSetupResult(
 
 const defaultConfigFileCode = `
 module.exports = {
-  prepareStore: async () => await Promise.resolve({}),
+  prepareStore: async (util) => await Promise.resolve({}),
   setupResult: async (block, structuredLine, store) => {
     return await Promise.resolve({
       fileName: structuredLine.fileName,
@@ -70,7 +71,9 @@ async function initializeConfigurationFile(): Promise<void> {
     program.help();
     return;
   }
-  const store = await (config?.prepareStore ?? defaultPrepareStore)();
+  const store = await (config?.prepareStore ?? defaultPrepareStore)(
+    new Utility()
+  );
   const blocks = stdinData
     .replace(/\n\n/g, "\n--\n")
     .split("\n--\n")
