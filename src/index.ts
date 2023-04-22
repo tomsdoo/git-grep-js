@@ -1,5 +1,3 @@
-export function testFunc(a: number): number {
-  return a + 1;
-}
-
-console.log("test");
+export { SearchResultBlock } from "./modules/SearchResultBlock";
+export { StructuredLine } from "./modules/StructuredLine";
+export { Utility } from "./modules/Utility";
