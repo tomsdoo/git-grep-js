@@ -81,6 +81,7 @@ async function initializeConfigurationFile(): Promise<void> {
   console.log(`[`);
   for (const [blockIndex, block] of Object.entries(blocks)) {
     const matchedStructuredLines = block.matchedStructuredLines;
+    const isLastBlock = Number(blockIndex) === blocks.length - 1;
     for (const [structuredLineIndex, structuredLine] of Object.entries(
       matchedStructuredLines
     )) {
@@ -92,7 +93,7 @@ async function initializeConfigurationFile(): Promise<void> {
 
       const sObj = JSON.stringify(obj, null, 2);
       const isLastItem =
-        Number(blockIndex) === blocks.length - 1 &&
+        isLastBlock &&
         Number(structuredLineIndex) === matchedStructuredLines.length - 1;
       const sComma = isLastItem ? "" : ",";
       const sObjNComma = `${sObj}${sComma}`;
