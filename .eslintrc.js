@@ -15,5 +15,6 @@ module.exports = {
     project: 'tsconfig.json',
   },
   rules: {
+    complexity: ["warn", 9],
   }
 }
