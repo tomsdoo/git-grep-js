@@ -20,6 +20,9 @@ program.on("--help", () => {
   console.log(`  ${commandName} --help`);
   console.log(`  git grep -n -C 1 -e "some" | npx ${commandName}`);
   console.log(`  ${commandName} --init-config`);
+  console.log(``);
+  console.log(`see https://git-grep-json.netlify.app/ for details`);
+  console.log(``);
 });
 
 async function defaultPrepareStore(util: Utility): Promise<any> {
@@ -56,6 +59,7 @@ module.exports = {
 async function initializeConfigurationFile(): Promise<void> {
   const fileName = join(cwd(), "./grep2json.config.js");
   await writeFile(fileName, defaultConfigFileCode);
+  console.log(`configuration file is initialized: ${fileName}`);
 }
 
 (async () => {
