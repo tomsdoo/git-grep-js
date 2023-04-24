@@ -62,19 +62,24 @@ async function initializeConfigurationFile(): Promise<void> {
   console.log(`configuration file is initialized: ${fileName}`);
 }
 
+async function behaveAsIsTTY(opts: any): Promise<void> {
+  if (opts.initConfig as boolean) {
+    await initializeConfigurationFile();
+    return;
+  }
+  program.help();
+}
+
 (async () => {
   ///
   const config = await getConfig();
 
   const { isTTY, opts, stdin: stdinData } = await getInputData(program);
   if (isTTY) {
-    if (opts.initConfig as boolean) {
-      await initializeConfigurationFile();
-      return;
-    }
-    program.help();
+    await behaveAsIsTTY(opts);
     return;
   }
+
   const store = await (config?.prepareStore ?? defaultPrepareStore)(
     new Utility()
   );
