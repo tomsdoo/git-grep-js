@@ -88,6 +88,14 @@ async function behaveAsIsTTY(opts: any): Promise<void> {
     .split("\n--\n")
     .map((resultBlock) => new SearchResultBlock(resultBlock));
   console.log(`[`);
+  const outputLog = (obj: any, isLastItem: boolean): void => {
+    const sObj = JSON.stringify(obj, null, 2);
+    const sComma = isLastItem ? "" : ",";
+    const sObjNComma = `${sObj}${sComma}`;
+    sObjNComma.split("\n").forEach((outLine) => {
+      console.log(`  ${outLine}`);
+    });
+  };
   for (const [blockIndex, block] of Object.entries(blocks)) {
     const matchedStructuredLines = block.matchedStructuredLines;
     const isLastBlock = Number(blockIndex) === blocks.length - 1;
@@ -100,15 +108,10 @@ async function behaveAsIsTTY(opts: any): Promise<void> {
         store
       );
 
-      const sObj = JSON.stringify(obj, null, 2);
       const isLastItem =
         isLastBlock &&
         Number(structuredLineIndex) === matchedStructuredLines.length - 1;
-      const sComma = isLastItem ? "" : ",";
-      const sObjNComma = `${sObj}${sComma}`;
-      sObjNComma.split("\n").forEach((outLine) => {
-        console.log(`  ${outLine}`);
-      });
+      outputLog(obj, isLastItem);
     }
   }
   console.log(`]`);
