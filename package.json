@@ -1,6 +1,6 @@
 {
   "name": "git-grep-json",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "A tool for git-grep",
   "exports": {
     ".": {
