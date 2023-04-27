@@ -8,6 +8,7 @@ import { writeFile } from "fs/promises";
 import { join } from "path";
 import { getInputData } from "../util/getInputData";
 import { Utility } from "../modules/Utility";
+import { Logger } from "../modules/Logger";
 
 const program = new Command();
 const commandName = "grep2json";
@@ -87,15 +88,8 @@ async function behaveAsIsTTY(opts: any): Promise<void> {
     .replace(/\n\n/g, "\n--\n")
     .split("\n--\n")
     .map((resultBlock) => new SearchResultBlock(resultBlock));
-  console.log(`[`);
-  const outputLog = (obj: any, isLastItem: boolean): void => {
-    const sObj = JSON.stringify(obj, null, 2);
-    const sComma = isLastItem ? "" : ",";
-    const sObjNComma = `${sObj}${sComma}`;
-    sObjNComma.split("\n").forEach((outLine) => {
-      console.log(`  ${outLine}`);
-    });
-  };
+  const logger = new Logger();
+  logger.writeFirst();
   for (const [blockIndex, block] of Object.entries(blocks)) {
     const matchedStructuredLines = block.matchedStructuredLines;
     const isLastBlock = Number(blockIndex) === blocks.length - 1;
@@ -111,10 +105,10 @@ async function behaveAsIsTTY(opts: any): Promise<void> {
       const isLastItem =
         isLastBlock &&
         Number(structuredLineIndex) === matchedStructuredLines.length - 1;
-      outputLog(obj, isLastItem);
+      logger.writeObject(obj, isLastItem);
     }
   }
-  console.log(`]`);
+  logger.writeLast();
 
   ///
 })()
